@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App_Bluetooth"
+             x:Class="App_Bluetooth.MainPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="btnStatus" Text="STATUS" Clicked="btnStatus_Clicked"/>
+                <Button x:Name="btnScanDev" Text="SCAN" Clicked="btnScanDev_Clicked"/>
+                <Button x:Name="btnConnect" Text="CONNECT" Clicked="btnConnect_Clicked"/>
+                <Button x:Name="btnTest" Text="TEST" Clicked="btnTest_Clicked"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Picker x:Name="lblSendPicker" WidthRequest="100" />
+                <Button x:Name="btnSendData" Text="SEND" Clicked="btnSendData_Clicked" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">                
+                <Button x:Name="btnRecvData" Text="RECV" Clicked="btnRecvData_Clicked" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label x:Name="lblRecvValue" Text=""/>
+            </StackLayout>
+            <ListView x:Name="lv" ItemSelected="lv_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Id}"/>
+                                <Label Text="{Binding Name}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

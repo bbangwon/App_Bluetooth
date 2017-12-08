@@ -80,8 +80,8 @@ namespace App_Bluetooth
         private async void btnConnect_Clicked(object sender, EventArgs e)
         {
             //await adapter.ConnectToDeviceAsync(device);
-            //device = await adapter.ConnectToKnownDeviceAsync(new Guid("00000000-0000-0000-0000-c7e4e3e2e157"));
-            device = await adapter.ConnectToKnownDeviceAsync(new Guid("00000000-0000-0000-0000-c7e4e3e2e1fc"));
+            device = await adapter.ConnectToKnownDeviceAsync(new Guid("00000000-0000-0000-0000-c7e4e3e2e157"));
+            //device = await adapter.ConnectToKnownDeviceAsync(new Guid("00000000-0000-0000-0000-c7e4e3e2e1fc"));
             service = await device.GetServiceAsync(Guid.Parse("0000fff0-0000-1000-8000-00805f9b34fb"));
             recv_character = await service.GetCharacteristicAsync(Guid.Parse("0000fff1-0000-1000-8000-00805f9b34fb"));
             send_character = await service.GetCharacteristicAsync(Guid.Parse("0000fff2-0000-1000-8000-00805f9b34fb"));

@@ -29,7 +29,7 @@ namespace App_Bluetooth
             TwoByte bytes = new TwoByte();
             bytes.hByte = (byte)(_Data / (byte.MaxValue+1));
             bytes.lByte = (byte)(_Data % (byte.MaxValue+1));
-            return bytes;
+            return bytes;            
         }
 
         public int GetInt()
@@ -105,7 +105,7 @@ namespace App_Bluetooth
     }
 
 
-    public class GBGPrrotocol
+    public class GBGProtocol
     {
         const byte GBGP_CMD_ONLY_KG = 0xA0;         //체중만 전송
         const byte GBGP_CMD_ONLY_KG_FAIL = 0x00;    //중량(측정 실패)
@@ -217,71 +217,102 @@ namespace App_Bluetooth
             return _makeProtocol(ac, true, GBGP_CMD_AIRCHECK);
         }
 
-        public string DeviceToApp_ParseRecvData(List<byte> recvData)    //return to JSON Data
+        public string DeviceToApp_ParseRecvData(List<byte> recvData, int protocolVer = 1)    //return to JSON Data
         {
             var json = new JObject();
 
-            int size = recvData[4];
-
-            if (recvData[3] == GBGP_CMD_ONLY_KG)
+            if (recvData.Count > 1)
             {
-                json.Add("type", "ONLYKG");            
-                
-                switch(recvData[4 + size])
+                int size = recvData[4];
+
+                if (recvData[3] == GBGP_CMD_ONLY_KG)
                 {
-                    case GBGP_CMD_ONLY_KG_FAIL:
-                        json.Add("result", "FAIL");
-                        break;
-                    case GBGP_CMD_ONLY_KG_SUCCESS:
-                        json.Add("result", "SUCCESS");
-                        json.Add("KG", new TwoByte(recvData[5], recvData[6]).GetInt());
-                        json.Add("LB", new TwoByte(recvData[7], recvData[8]).GetInt());
-                        break;
+                    json.Add("type", "ONLYKG");
+
+                    switch (recvData[4 + size])
+                    {
+                        case GBGP_CMD_ONLY_KG_FAIL:
+                            json.Add("result", "FAIL");
+                            break;
+                        case GBGP_CMD_ONLY_KG_SUCCESS:
+                            json.Add("result", "SUCCESS");
+                            json.Add("KG", Math.Round(new TwoByte(recvData[5], recvData[6]).GetInt() * 0.01f,2));
+                            json.Add("LB", Math.Round(new TwoByte(recvData[7], recvData[8]).GetInt() * 0.01f,2));
+                            break;
+                    }
                 }
-            }
-            else if(recvData[3] == GBGP_CMD_KG_AND_AIR)
-            {
-                json.Add("type", "KGAIR");
-
-                switch (recvData[4 + size])
+                else if (recvData[3] == GBGP_CMD_KG_AND_AIR)
                 {
-                    case GBGP_CMD_KG_AND_AIR_OPT1:
-                        json.Add("result", "SUCCESS");
-                        json.Add("subType", "KG/LB/FAT/VFAT");
-                        json.Add("userID", recvData[5]);
-                        json.Add("KG", new TwoByte(recvData[6], recvData[7]).GetInt());
-                        json.Add("LB", new TwoByte(recvData[8], recvData[9]).GetInt());
-                        json.Add("FAT", new TwoByte(recvData[10], recvData[11]).GetInt());
-                        json.Add("VFAT", new TwoByte(recvData[12], recvData[13]).GetInt());
-                        break;
-                    case GBGP_CMD_KG_AND_AIR_OPT2:
-                        json.Add("result", "SUCCESS");
-                        json.Add("subType", "WATER/MUSCLE");
-                        json.Add("userID", recvData[5]);
-                        json.Add("WATER", new TwoByte(recvData[6], recvData[7]).GetInt());
-                        json.Add("MUSCLE", new TwoByte(recvData[8], recvData[9]).GetInt());
-                        break;
-                    case GBGP_CMD_KG_AND_AIR_OPT3:
-                        json.Add("result", "SUCCESS");
-                        json.Add("subType", "BONE/KCAL/BMI");
-                        json.Add("userID", recvData[5]);
-                        json.Add("BONE", new TwoByte(recvData[6], recvData[7]).GetInt());
-                        json.Add("KCAL", new TwoByte(recvData[8], recvData[9]).GetInt());
-                        json.Add("BMI", new TwoByte(recvData[10], recvData[11]).GetInt());
-                        break;
-                    case GBGP_CMD_KG_AND_AIR_FAIL:
-                        json.Add("result", "FAIL");
-                        break;
-                    case GBGP_CMD_KG_AND_AIR_OPT4:
-                        json.Add("result", "SUCCESS");
-                        json.Add("subType", "PM25/PM10/VOC/CO2/TEMP/HUMI");
-                        json.Add("PM25", new TwoByte(recvData[5], recvData[6]).GetInt());
-                        json.Add("PM10", new TwoByte(recvData[7], recvData[8]).GetInt());
-                        json.Add("VOC", new TwoByte(recvData[9], recvData[10]).GetInt());
-                        json.Add("CO2", new TwoByte(recvData[11], recvData[12]).GetInt());
-                        json.Add("TEMP", new TwoByte(recvData[13], recvData[14]).GetInt());
-                        json.Add("HUMI", new TwoByte(recvData[15], recvData[16]).GetInt());
-                        break;
+                    json.Add("type", "KGAIR");
+                    
+
+                    switch (recvData[4 + size])
+                    {
+                        case GBGP_CMD_KG_AND_AIR_OPT1:                            
+                            json.Add("result", "SUCCESS");
+                            json.Add("subType", "KG/LB/FAT/VFAT");
+                            if (protocolVer == 1)
+                            {
+                                json.Add("KG", new TwoByte(recvData[5], recvData[6]).GetInt());
+                                json.Add("LB", new TwoByte(recvData[7], recvData[8]).GetInt());
+                                json.Add("FAT", Math.Round(new TwoByte(recvData[9], recvData[10]).GetInt() * 0.1f, 1));
+                                json.Add("VFAT", Math.Round(new TwoByte(recvData[11], recvData[12]).GetInt() * 0.1f, 1));
+                            }
+                            else if(protocolVer == 2)
+                            {
+                                json.Add("userID", recvData[5]);
+                                json.Add("KG", new TwoByte(recvData[6], recvData[7]).GetInt());
+                                json.Add("LB", new TwoByte(recvData[8], recvData[9]).GetInt());
+                                json.Add("FAT", Math.Round(new TwoByte(recvData[10], recvData[11]).GetInt() * 0.1f, 1));
+                                json.Add("VFAT", Math.Round(new TwoByte(recvData[12], recvData[13]).GetInt() * 0.1f, 1));
+                            }
+                            break;
+                        case GBGP_CMD_KG_AND_AIR_OPT2:
+                            json.Add("result", "SUCCESS");
+                            json.Add("subType", "WATER/MUSCLE");
+                            if (protocolVer == 1)
+                            {
+                                json.Add("WATER", Math.Round(new TwoByte(recvData[5], recvData[6]).GetInt() * 0.1f, 1));
+                                json.Add("MUSCLE", Math.Round(new TwoByte(recvData[7], recvData[8]).GetInt() * 0.1f, 1));
+                            }
+                            else if(protocolVer == 2)
+                            {
+                                json.Add("userID", recvData[5]);
+                                json.Add("WATER", Math.Round(new TwoByte(recvData[6], recvData[7]).GetInt() * 0.1f, 1));
+                                json.Add("MUSCLE", Math.Round(new TwoByte(recvData[8], recvData[9]).GetInt() * 0.1f, 1));
+                            }
+                            break;
+                        case GBGP_CMD_KG_AND_AIR_OPT3:
+                            json.Add("result", "SUCCESS");
+                            json.Add("subType", "BONE/KCAL/BMI");
+                            if(protocolVer == 1)
+                            {
+                                json.Add("BONE", Math.Round(new TwoByte(recvData[5], recvData[6]).GetInt() * 0.1f, 1));
+                                json.Add("KCAL", new TwoByte(recvData[7], recvData[8]).GetInt());
+                                json.Add("BMI", new TwoByte(recvData[9], recvData[10]).GetInt());
+                            }
+                            else if(protocolVer == 2)
+                            {
+                                json.Add("userID", recvData[5]);
+                                json.Add("BONE", Math.Round(new TwoByte(recvData[6], recvData[7]).GetInt() * 0.1f, 1));
+                                json.Add("KCAL", new TwoByte(recvData[8], recvData[9]).GetInt());
+                                json.Add("BMI", new TwoByte(recvData[10], recvData[11]).GetInt());
+                            }                           
+                            break;
+                        case GBGP_CMD_KG_AND_AIR_FAIL:
+                            json.Add("result", "FAIL");
+                            break;
+                        case GBGP_CMD_KG_AND_AIR_OPT4:
+                            json.Add("result", "SUCCESS");
+                            json.Add("subType", "PM25/PM10/VOC/CO2/TEMP/HUMI");
+                            json.Add("PM25", new TwoByte(recvData[5], recvData[6]).GetInt());
+                            json.Add("PM10", new TwoByte(recvData[7], recvData[8]).GetInt());
+                            json.Add("VOC", new TwoByte(recvData[9], recvData[10]).GetInt());
+                            json.Add("CO2", new TwoByte(recvData[11], recvData[12]).GetInt());
+                            json.Add("TEMP", Math.Round(new TwoByte(recvData[13], recvData[14]).GetInt() * 0.1f,1));
+                            json.Add("HUMI", Math.Round(new TwoByte(recvData[15], recvData[16]).GetInt() * 0.1f,1));
+                            break;
+                    }
                 }
             }
             return json.ToString();
@@ -289,10 +320,10 @@ namespace App_Bluetooth
 
 
         List<byte> _makeProtocol(List<byte> contents, bool appToDevice, byte CMD)
-        {
+        {            
             List<byte> rb = new List<byte>();
             rb.Add(0xF5);
-            rb.Add(0xFA);
+            rb.Add(0xFA);            
 
             if(appToDevice)
             {

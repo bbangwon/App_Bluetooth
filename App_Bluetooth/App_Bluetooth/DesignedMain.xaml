@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_Bluetooth.DesignedMain">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Image x:Name="backImage" 
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds="0,0,1,1">
+            </Image>
+            <Label x:Name="lblWeight" TextColor="White" Text="10 kg"
+                   FontSize="36"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds="0.5,.2,0.5,.1" 
+                   HorizontalOptions="CenterAndExpand" />
+
+            <Label x:Name="lblFat" TextColor="White" Text="00 %"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".7,.46,0.3,.07" />
+
+            <Label x:Name="lblMuscle" TextColor="White" Text="00 %"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".7,.565,0.3,.07" />
+
+            <Label x:Name="lblBone" TextColor="White" Text="00 kg"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".7,.67,0.3,.07" />
+
+            <Label x:Name="lblWater" TextColor="White" Text="00 %"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".7,.775,0.3,.07" />
+
+            <Label x:Name="lblKcal" TextColor="White" Text="0000"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".7,.88,0.3,.07" />
+
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

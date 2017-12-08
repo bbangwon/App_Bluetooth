@@ -6,11 +6,16 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Button x:Name="btnStatus" Text="STATUS" Clicked="btnStatus_Clicked"/>
-                <Button x:Name="btnScanDev" Text="SCAN" Clicked="btnScanDev_Clicked"/>
-                <Button x:Name="btnConnect" Text="CONNECT" Clicked="btnConnect_Clicked"/>
-                <Button x:Name="btnTest" Text="TEST" Clicked="btnTest_Clicked"/>
+                <Label Text="프로토콜버전" VerticalOptions="CenterAndExpand"/>
+                <Entry x:Name="protocolVer" Text="2"/>
             </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="btnStatus" Text="STATUS" Clicked="btnStatus_Clicked"/>
+                <!--<Button x:Name="btnScanDev" Text="SCAN" Clicked="btnScanDev_Clicked"/>-->
+                <Button x:Name="btnConnect" Text="CONNECT" Clicked="btnConnect_Clicked"/>
+                <!--<Button x:Name="btnTest" Text="TEST" Clicked="btnTest_Clicked"/>-->
+            </StackLayout>
+            <!--
             <StackLayout Orientation="Horizontal">
                 <Picker x:Name="lblSendPicker" WidthRequest="100" />
                 <Button x:Name="btnSendData" Text="SEND" Clicked="btnSendData_Clicked" />
@@ -18,6 +23,13 @@
             <StackLayout Orientation="Horizontal">                
                 <Button x:Name="btnRecvData" Text="RECV" Clicked="btnRecvData_Clicked" />
             </StackLayout>
+            -->
+
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="btnKGView" Text="체중UI" Clicked="btnKGView_Clicked" />
+                <Button x:Name="btnAIRView" Text="공기질UI" Clicked="btnAIRView_Clicked" />
+            </StackLayout>
+            
             <StackLayout Orientation="Horizontal">
                 <Label x:Name="lblRecvValue" Text=""/>
             </StackLayout>

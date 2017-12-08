@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_Bluetooth.DesignedMain2">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Image x:Name="backImage" 
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds="0,0,1,1">
+            </Image>            
+            <Label x:Name="lblAir" TextColor="White" Text="00 ㎍/㎥"
+                   FontSize="36"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds="0.5,.2,0.5,.1" 
+                   HorizontalOptions="CenterAndExpand"
+                   />            
+
+            <Label x:Name="lblTemp" TextColor="White" Text="00 ℃"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".9,.46,0.3,.07" />
+
+            <Label x:Name="lblHumi" TextColor="White" Text="00 %"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".9,.565,0.3,.07" />
+
+            <Label x:Name="lblCO2" TextColor="White" Text="00 ppm"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".9,.67,0.3,.07" />
+
+            <Label x:Name="lblPM10" TextColor="White" Text="00 ㎍/㎥"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".9,.775,0.3,.07" />
+
+            <Label x:Name="lblPM25" TextColor="White" Text="00 ㎍/㎥"
+                   FontSize="Default"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   AbsoluteLayout.LayoutFlags="All"
+                   AbsoluteLayout.LayoutBounds=".9,.88,0.3,.07" />
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App_Bluetooth.GBGKGAIR">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="초미세먼지(PM2.5)" />
+                <Label x:Name="PM25" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="미세먼지(PM10)" />
+                <Label x:Name="PM10" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="유기화합물(VOC)" />
+                <Label x:Name="VOC" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="탄소(CO2)" />
+                <Label x:Name="CO2" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="온도(Temp)" />
+                <Label x:Name="TEMP" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="습도(Humi)" />
+                <Label x:Name="HUMI" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

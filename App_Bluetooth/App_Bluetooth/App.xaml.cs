@@ -12,8 +12,8 @@ namespace App_Bluetooth
         public App()
         {
             InitializeComponent();
-
-            MainPage = new App_Bluetooth.MainPage();
+            
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()
